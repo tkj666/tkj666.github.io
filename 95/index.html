@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  
+  <title>Codeforces Round #503 (1019/1020) 题意及题解 - tkj&#39;s Blog</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="null">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
+  <meta name="description" content=".">
+<meta name="keywords" content="计算几何,cf,边分治,凸包,闵可夫斯基和,构造,交互题,贪心">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces Round #503 (1019&#x2F;1020) 题意及题解">
+<meta property="og:url" content="https://tkj666.github.io/95/index.html">
+<meta property="og:site_name" content="tkj&#39;s Blog">
+<meta property="og:description" content=".">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-09T03:04:25.390Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Codeforces Round #503 (1019&#x2F;1020) 题意及题解">
+<meta name="twitter:description" content=".">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
+  
+  <link rel="stylesheet" href="/css/style.css?v=1607492510514">
+</head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(/img/background.jpg)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="tkj" class="mdui-btn mdui-btn-icon"><img src="/img/avatar.png" alt="tkj"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="tkj">
+            <img src="/img/avatar.png" alt="tkj" alt="tkj">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>142</div>
+        <div><span>标签</span>99</div>
+        <div><span>分类</span>0</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        <form id="search_form" action_e="https://cn.bing.com/search?q=site:tkj666.github.io" onsubmit="return search();">
+            <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+        </form>
+    </div>
+</div>
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://github.com/tkj666/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">            <i class="nexmoefont icon-github"></i>
+        </a>
+    </div>
+</div>
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AC自动机/" style="font-size: 11.82px;">AC自动机</a> <a href="/tags/C-语言/" style="font-size: 10px;">C++语言</a> <a href="/tags/DP/" style="font-size: 20px;">DP</a> <a href="/tags/LCA/" style="font-size: 11.82px;">LCA</a> <a href="/tags/Prufer序列/" style="font-size: 10.91px;">Prüfer序列</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/bitset/" style="font-size: 10px;">bitset</a> <a href="/tags/cf/" style="font-size: 10px;">cf</a> <a href="/tags/dfs/" style="font-size: 11.82px;">dfs</a> <a href="/tags/dfs序/" style="font-size: 12.73px;">dfs序</a> <a href="/tags/dp/" style="font-size: 10.91px;">dp</a> <a href="/tags/exgcd/" style="font-size: 10px;">exgcd</a> <a href="/tags/fft/" style="font-size: 10.91px;">fft</a> <a href="/tags/gcd/" style="font-size: 11.82px;">gcd</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/lca/" style="font-size: 10px;">lca</a> <a href="/tags/material/" style="font-size: 10px;">material</a> <a href="/tags/mathjax/" style="font-size: 10px;">mathjax</a> <a href="/tags/pbds/" style="font-size: 10px;">pbds</a> <a href="/tags/set/" style="font-size: 11.82px;">set</a> <a href="/tags/splay/" style="font-size: 13.64px;">splay</a> <a href="/tags/stl/" style="font-size: 10.91px;">stl</a> <a href="/tags/tarjan/" style="font-size: 10px;">tarjan</a> <a href="/tags/trie/" style="font-size: 12.73px;">trie</a> <a href="/tags/三分/" style="font-size: 10px;">三分</a> <a href="/tags/主席树/" style="font-size: 12.73px;">主席树</a> <a href="/tags/乱搞/" style="font-size: 11.82px;">乱搞</a> <a href="/tags/二分/" style="font-size: 18.18px;">二分</a> <a href="/tags/二分图/" style="font-size: 10px;">二分图</a> <a href="/tags/二分图匹配/" style="font-size: 10px;">二分图匹配</a> <a href="/tags/交互题/" style="font-size: 10px;">交互题</a> <a href="/tags/储存原理/" style="font-size: 10px;">储存原理</a> <a href="/tags/凸包/" style="font-size: 10.91px;">凸包</a> <a href="/tags/分块/" style="font-size: 11.82px;">分块</a> <a href="/tags/分数规划/" style="font-size: 10px;">分数规划</a> <a href="/tags/分治/" style="font-size: 11.82px;">分治</a> <a href="/tags/切比雪夫距离/" style="font-size: 10px;">切比雪夫距离</a> <a href="/tags/半平面交/" style="font-size: 10px;">半平面交</a> <a href="/tags/单位根反演/" style="font-size: 10.91px;">单位根反演</a> <a href="/tags/单调队列/" style="font-size: 10px;">单调队列</a> <a href="/tags/博弈/" style="font-size: 11.82px;">博弈</a> <a href="/tags/可并堆/" style="font-size: 10px;">可并堆</a> <a href="/tags/可持久化trie/" style="font-size: 10px;">可持久化trie</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/后缀自动机/" style="font-size: 10.91px;">后缀自动机</a> <a href="/tags/哈希/" style="font-size: 12.73px;">哈希</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/容斥/" style="font-size: 10.91px;">容斥</a> <a href="/tags/对偶图/" style="font-size: 10px;">对偶图</a> <a href="/tags/差分约束/" style="font-size: 10px;">差分约束</a> <a href="/tags/平衡树/" style="font-size: 10px;">平衡树</a> <a href="/tags/并查集/" style="font-size: 10.91px;">并查集</a> <a href="/tags/快速幂/" style="font-size: 12.73px;">快速幂</a> <a href="/tags/打表/" style="font-size: 10.91px;">打表</a> <a href="/tags/扫描线/" style="font-size: 10.91px;">扫描线</a> <a href="/tags/拓扑序/" style="font-size: 10.91px;">拓扑序</a> <a href="/tags/排序/" style="font-size: 10.91px;">排序</a> <a href="/tags/插头DP/" style="font-size: 10px;">插头DP</a> <a href="/tags/搜索/" style="font-size: 10px;">搜索</a> <a href="/tags/数位DP/" style="font-size: 12.73px;">数位DP</a> <a href="/tags/数学/" style="font-size: 14.55px;">数学</a> <a href="/tags/数论/" style="font-size: 15.45px;">数论</a> <a href="/tags/斯坦纳树/" style="font-size: 10.91px;">斯坦纳树</a> <a href="/tags/暴力/" style="font-size: 10px;">暴力</a> <a href="/tags/曼哈顿距离/" style="font-size: 10px;">曼哈顿距离</a> <a href="/tags/最小割/" style="font-size: 10px;">最小割</a> <a href="/tags/最短路/" style="font-size: 12.73px;">最短路</a> <a href="/tags/最长上升子序列/" style="font-size: 10px;">最长上升子序列</a> <a href="/tags/最长公共子序列/" style="font-size: 10px;">最长公共子序列</a> <a href="/tags/期望/" style="font-size: 10.91px;">期望</a> <a href="/tags/权值线段树/" style="font-size: 10px;">权值线段树</a> <a href="/tags/构造/" style="font-size: 10px;">构造</a> <a href="/tags/树套树/" style="font-size: 10px;">树套树</a> <a href="/tags/树形DP/" style="font-size: 14.55px;">树形DP</a> <a href="/tags/树形dp/" style="font-size: 10px;">树形dp</a> <a href="/tags/树状数组/" style="font-size: 14.55px;">树状数组</a> <a href="/tags/树的直径/" style="font-size: 10.91px;">树的直径</a> <a href="/tags/模拟/" style="font-size: 10px;">模拟</a> <a href="/tags/游记/" style="font-size: 10.91px;">游记</a> <a href="/tags/点分治/" style="font-size: 10px;">点分治</a> <a href="/tags/状压DP/" style="font-size: 14.55px;">状压DP</a> <a href="/tags/矩阵乘法/" style="font-size: 16.36px;">矩阵乘法</a> <a href="/tags/离散化/" style="font-size: 12.73px;">离散化</a> <a href="/tags/线性基/" style="font-size: 10px;">线性基</a> <a href="/tags/线段树/" style="font-size: 19.09px;">线段树</a> <a href="/tags/线段树分治/" style="font-size: 10px;">线段树分治</a> <a href="/tags/组合数学/" style="font-size: 14.55px;">组合数学</a> <a href="/tags/网络流/" style="font-size: 11.82px;">网络流</a> <a href="/tags/莫队/" style="font-size: 10.91px;">莫队</a> <a href="/tags/虚树/" style="font-size: 10px;">虚树</a> <a href="/tags/裴蜀定理/" style="font-size: 11.82px;">裴蜀定理</a> <a href="/tags/计算几何/" style="font-size: 17.27px;">计算几何</a> <a href="/tags/贪心/" style="font-size: 12.73px;">贪心</a> <a href="/tags/费用流/" style="font-size: 10.91px;">费用流</a> <a href="/tags/辛普森积分法/" style="font-size: 10px;">辛普森积分法</a> <a href="/tags/边分治/" style="font-size: 10px;">边分治</a> <a href="/tags/错排公式/" style="font-size: 10px;">错排公式</a> <a href="/tags/闵可夫斯基和/" style="font-size: 10px;">闵可夫斯基和</a> <a href="/tags/高精度/" style="font-size: 10.91px;">高精度</a>
+    </div>
+    
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">54</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">72</span></li></ul>
+    </div>
+  </div>
+
+
+<style>
+.nexmoe-widget .archive-list-count{
+	position : absolute;
+	right: 15px;
+	top:9px;
+	color: #DDD;
+}
+</style>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2020 tkj
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+  
+      <div class="nexmoe-post-cover" style="padding-bottom: 6.666666666666667%;"> 
+          <img data-src="/img/background.jpg" data-sizes="auto" alt="Codeforces Round #503 (1019/1020) 题意及题解" class="lazyload">
+          <h1>Codeforces Round #503 (1019/1020) 题意及题解</h1>
+      </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2018年08月16日</a>
+    <a><i class="nexmoefont icon-areachart"></i>2.4k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 12 分钟</a>
+</div>
+
+  <div class="nexmoe-post-right">
+    
+      <div class="nexmoe-fixed">
+        <div class="nexmoe-valign">
+            <div class="nexmoe-toc">
+                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#div2A"><span class="toc-number">1.</span> <span class="toc-text">div2A</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意："><span class="toc-number">1.1.</span> <span class="toc-text">题意：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题解："><span class="toc-number">1.2.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码："><span class="toc-number">1.3.</span> <span class="toc-text">代码：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#div2B"><span class="toc-number">2.</span> <span class="toc-text">div2B</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意：-1"><span class="toc-number">2.1.</span> <span class="toc-text">题意：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题解：-1"><span class="toc-number">2.2.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码：-1"><span class="toc-number">2.3.</span> <span class="toc-text">代码：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#div2C-div1A"><span class="toc-number">3.</span> <span class="toc-text">div2C/div1A</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意：-2"><span class="toc-number">3.1.</span> <span class="toc-text">题意：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题解：-2"><span class="toc-number">3.2.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码：-2"><span class="toc-number">3.3.</span> <span class="toc-text">代码：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#div2D-div1B"><span class="toc-number">4.</span> <span class="toc-text">div2D/div1B</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意：-3"><span class="toc-number">4.1.</span> <span class="toc-text">题意：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题解：-3"><span class="toc-number">4.2.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码：-3"><span class="toc-number">4.3.</span> <span class="toc-text">代码：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#div2E-div2C"><span class="toc-number">5.</span> <span class="toc-text">div2E/div2C</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意：-4"><span class="toc-number">5.1.</span> <span class="toc-text">题意：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题解：-4"><span class="toc-number">5.2.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码：-4"><span class="toc-number">5.3.</span> <span class="toc-text">代码：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#div1D"><span class="toc-number">6.</span> <span class="toc-text">div1D</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意：-5"><span class="toc-number">6.1.</span> <span class="toc-text">题意：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题解：-5"><span class="toc-number">6.2.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码：-5"><span class="toc-number">6.3.</span> <span class="toc-text">代码：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#div1E"><span class="toc-number">7.</span> <span class="toc-text">div1E</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意：-6"><span class="toc-number">7.1.</span> <span class="toc-text">题意：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题解：-6"><span class="toc-number">7.2.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码：-6"><span class="toc-number">7.3.</span> <span class="toc-text">代码：</span></a></li></ol></li></ol>
+            </div>
+        </div>
+      </div>
+    
+  </div>
+
+  <article>
+    <p>.<br><a id="more"></a></p>
+<h3 id="div2A"><a href="#div2A" class="headerlink" title="div2A"></a>div2A</h3><h4 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h4><p>有$n$幢楼排成一排，每幢楼的高度都是$h$，楼房之间在$[a,b]$层有通道相连，在楼内垂直走1层和通过通道走到相邻的楼房所需时间都是1，给出$k$个询问，问从$t_a$楼的$f_a$层走到$t_b$楼$f_b$层最短时间。</p>
+<h4 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h4><p>没什么好讲的。</p>
+<h4 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h4><pre><code class="lang-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n, h, a, b, k;
+
+int main()
+{
+    scanf(&quot;%d%d%d%d%d&quot;, &amp;n, &amp;h, &amp;a, &amp;b, &amp;k);
+    for (int i = 0; i &lt; k; i++)
+    {
+        int x1, y1, x2, y2;
+        scanf(&quot;%d%d%d%d&quot;, &amp;x1, &amp;y1, &amp;x2, &amp;y2);
+        if (x1 == x2) printf(&quot;%d\n&quot;, abs(y1 - y2));
+        else if (y1 &lt; a) printf(&quot;%d\n&quot;, a - y1 + abs(x1 - x2) + abs(a - y2));
+        else if (y1 &gt;= a &amp;&amp; y1 &lt;= b) printf(&quot;%d\n&quot;, abs(x1 - x2) + abs(y1 - y2));
+        else printf(&quot;%d\n&quot;, y1 - b + abs(x1 - x2) + abs(b - y2));
+    }
+}
+</code></pre>
+<h3 id="div2B"><a href="#div2B" class="headerlink" title="div2B"></a>div2B</h3><h4 id="题意：-1"><a href="#题意：-1" class="headerlink" title="题意："></a>题意：</h4><p>给出一个$n$个节点的有向图，每个节点的出度为1。问从每个点开始往后走，第一个访问两次的点是什么。</p>
+<h4 id="题解：-1"><a href="#题解：-1" class="headerlink" title="题解："></a>题解：</h4><p><del>写的时候没看清数据范围写了个$O(n)$的还wa了一发。。</del></p>
+<p>因为$n \leq 1000$，所以之间$O(n^2)$模拟就好了。</p>
+<h4 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h4><pre><code class="lang-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n, p[1010], num = 0, fst[1010], ans[1010];
+bool oncir[1010], v[1010], tf[1010];
+stack&lt;int&gt; sta;
+struct edge
+{
+    int x, y, n;
+} e[1010];
+
+void dfs(int x)
+{
+    if (v[x])
+    {
+        while (!sta.empty() &amp;&amp; sta.top() != x)
+        {
+            oncir[sta.top()] = 1;
+            sta.pop();
+        }
+        oncir[x] = 1;
+        return;
+    }
+    if (tf[x]) return;
+    v[x] = tf[x] = 1;
+    sta.push(x);
+    dfs(p[x]);
+    v[x] = 0;
+}
+void dfs2(int x, int st)
+{
+    ans[x] = st;
+    for (int i = fst[x]; i; i = e[i].n)
+    {
+        int y = e[i].y;
+        if (!oncir[y]) dfs2(y, st);
+    }
+}
+void ins(int x, int y)
+{
+    e[++num] = {x, y, fst[x]};
+    fst[x] = num;
+}
+int main()
+{
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++)
+    {
+        scanf(&quot;%d&quot;, &amp;p[i]);
+        ins(p[i], i);
+    }
+    for (int i = 1; i &lt;= n; i++)
+        if (!v[i])
+        {
+            while (!sta.empty()) sta.pop();
+            dfs(i);
+        }/*
+    for (int i = 1; i &lt;= n; i++)
+        printf(&quot;%d &quot;, oncir[i]);
+    puts(&quot;&quot;);*/
+    for (int i = 1; i &lt;= n; i++)
+        if (oncir[i])
+            dfs2(i, i);
+    for (int i = 1; i &lt;= n; i++)
+        printf(&quot;%d &quot;,ans[i]);
+    puts(&quot;&quot;);
+}
+</code></pre>
+<h3 id="div2C-div1A"><a href="#div2C-div1A" class="headerlink" title="div2C/div1A"></a>div2C/div1A</h3><h4 id="题意：-2"><a href="#题意：-2" class="headerlink" title="题意："></a>题意：</h4><p>有$m$个政党和$n$个选民，每个选民有个偏爱的党派和收买他所需的花费，问你最少支付多少钱收买选民使得1号政党的选票严格大于其他政党。</p>
+<h4 id="题解：-2"><a href="#题解：-2" class="headerlink" title="题解："></a>题解：</h4><p>把所有选民按花费排个序，每个政党的选民也分别排序。枚举最终1号党的选票数，然后对于每个选民多于当前枚举的票数的政党，把他们最便宜的那些选民收买使得这个政党的选票少于当前枚举的票数。做完后如果1号政党的票数还不够枚举的就在所有选民里（不包括投1号的）找最便宜的补齐。记录一下答案就好了。</p>
+<h4 id="代码：-2"><a href="#代码：-2" class="headerlink" title="代码："></a>代码：</h4><pre><code class="lang-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n, m;
+long long ans = 1LL &lt;&lt; 62, sum[3010][3010];
+vector&lt;int&gt; a[3010];
+struct th
+{
+    int x, i, j;
+} b[3010];
+
+int cmp(th x, th y)
+{
+    return x.x &lt; y.x;
+}
+int main()
+{
+    scanf(&quot;%d%d&quot;, &amp;m, &amp;n);
+    for (int i = 0; i &lt; m; i++)
+    {
+        int x, y;
+        scanf(&quot;%d%d&quot;, &amp;x, &amp;y);
+        a[x].push_back(y);
+    }
+    for (int i = 1; i &lt;= n; i++)
+        sort(a[i].begin(), a[i].end());
+    int hh = 0;
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 0; j &lt; a[i].size(); j++)
+            b[hh++] = {a[i][j], i, j};
+    sort(b, b + m, cmp);
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 0; j &lt; a[i].size(); j++)
+            sum[i][j] = (j == 0 ? 0 : sum[i][j - 1]) + a[i][j];
+    for (int i = max(1u, a[1].size()); i &lt;= m; i++)
+    {
+        long long s = 0;
+        int cnt = a[1].size();
+        for (int j = 2; j &lt;= n; j++)
+        {
+            if (a[j].size() &gt;= i) s += sum[j][a[j].size() - i], cnt += a[j].size() - i + 1;
+        }
+        for (int j = 0; j &lt; m &amp;&amp; cnt &lt; i; j++)
+            if (b[j].i != 1 &amp;&amp; (a[b[j].i].size() &lt; i || a[b[j].i].size() &gt;= i &amp;&amp; b[j].j &gt; a[b[j].i].size() - i))
+            {
+                s += b[j].x;
+                cnt++;
+            }
+        // printf(&quot;%lld\n&quot;, s);
+        ans = min(ans, s);
+    }
+    printf(&quot;%lld\n&quot;, ans);
+}
+</code></pre>
+<h3 id="div2D-div1B"><a href="#div2D-div1B" class="headerlink" title="div2D/div1B"></a>div2D/div1B</h3><h4 id="题意：-3"><a href="#题意：-3" class="headerlink" title="题意："></a>题意：</h4><p>交互题。有一个长度为$n$（$n$为偶数）的环，每个位置有一个整数，并且相邻两个数的差的绝对值严格$=1$。每次你可以询问某个位置的数是几。你的任务是求出一个位置满足他和他对面的数相等。$2 \leq n \leq 100000$，询问数不能超过60个。</p>
+<h4 id="题解：-3"><a href="#题解：-3" class="headerlink" title="题解："></a>题解：</h4><p>%爆beginend</p>
+<p>设$f_i$表示$a_i - a_{i + \frac n 2}$，那么$f_i - f_{i - 1}$的值只可能是-2，0或2。我们可以把$f_x$看成一个连续函数，而$f_1=-f_{1 + \frac n 2}$，我们就可以在$2\log n$的询问内二分出零点。零点就是我们要求的位置。</p>
+<h4 id="代码：-3"><a href="#代码：-3" class="headerlink" title="代码："></a>代码：</h4><pre><code class="lang-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n;
+
+int main()
+{
+    scanf(&quot;%d&quot;, &amp;n);
+    int l = 1, r = 1 + n / 2;
+    int ll, rr, hh;
+    printf(&quot;? %d\n&quot;, l);
+    fflush(stdout);
+    scanf(&quot;%d&quot;, &amp;ll);
+    printf(&quot;? %d\n&quot;, r);
+    fflush(stdout);
+    scanf(&quot;%d&quot;, &amp;rr);
+    if (ll == rr)
+    {
+        puts(&quot;! 1&quot;);
+        fflush(stdout);
+        return 0;
+    }
+    ll -= rr;
+    rr = -ll;
+    while (l + 1 &lt; r)
+    {
+        int md = l + r &gt;&gt; 1;
+        printf(&quot;? %d\n&quot;, md);
+        fflush(stdout);
+        int hh;
+        scanf(&quot;%d&quot;, &amp;hh);
+        int oo = md + n / 2;
+        if (oo &gt; n) oo -= n;
+        printf(&quot;? %d\n&quot;, oo);
+        fflush(stdout);
+        scanf(&quot;%d&quot;, &amp;oo);
+        hh -= oo;
+        if (hh == 0)
+        {
+            printf(&quot;! %d\n&quot;, md);
+            fflush(stdout);
+            return 0;
+        }
+        else if (hh * ll &gt; 0)
+        {
+            l = md;
+            ll = hh;
+        }
+        else
+        {
+            r = md;
+            rr = hh;
+        }
+    }
+    puts(&quot;! -1&quot;);
+    fflush(stdout);
+}
+</code></pre>
+<h3 id="div2E-div2C"><a href="#div2E-div2C" class="headerlink" title="div2E/div2C"></a>div2E/div2C</h3><h4 id="题意：-4"><a href="#题意：-4" class="headerlink" title="题意："></a>题意：</h4><p>给出一个$n$个节点$m$条边的有向图，求一个点集$Q$，满足没有一对点$x, y \in Q$直接相连，并且对于集合外的点$z \notin Q$可以从$Q$中的点出发在两步内到达他。</p>
+<h4 id="题解：-4"><a href="#题解：-4" class="headerlink" title="题解："></a>题解：</h4><p><del>SAM队都不会做的大难题</del></p>
+<p>考虑如果把一个点及其一步能到的点从原图中删去，假如我们已经知道了新图的点集，那么假如点击内的点与删去的这个点直接相连，那么这个点集也是原图的答案；否则就把那个点加入到点集中。我们可以模拟这个过程，从1到n删点，然后反过来做就好了。</p>
+<h4 id="代码：-4"><a href="#代码：-4" class="headerlink" title="代码："></a>代码：</h4><pre><code class="lang-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n, m, num = 0, fst[1000010];
+bool del[1000010], reachable[1000010];
+struct edge
+{
+    int x, y, n;
+} e[1000010];
+stack&lt;int&gt; sta;
+vector&lt;int&gt; ans;
+
+void ins(int x, int y)
+{
+    e[++num] = {x, y, fst[x]};
+    fst[x] = num;
+}
+int main()
+{
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 0; i &lt; m; i++)
+    {
+        int x, y;
+        scanf(&quot;%d%d&quot;, &amp;x, &amp;y);
+        ins(x, y);
+    }
+    for (int i = 1; i &lt;= n; i++)
+        if (!del[i])
+        {
+            sta.push(i);
+            for (int j = fst[i]; j; j = e[j].n)
+            {
+                int y = e[j].y;
+                del[y] = 1;
+            }
+        }
+    while (!sta.empty())
+    {
+        int x = sta.top();
+        sta.pop();
+        if (!reachable[x])
+        {
+            for (int i = fst[x]; i; i = e[i].n)
+            {
+                int y = e[i].y;
+                reachable[y] = 1;
+            }
+            ans.push_back(x);
+        }
+    }
+    printf(&quot;%d\n&quot;, ans.size());
+    for (int x : ans) printf(&quot;%d &quot;, x);
+}
+</code></pre>
+<h3 id="div1D"><a href="#div1D" class="headerlink" title="div1D"></a>div1D</h3><h4 id="题意：-5"><a href="#题意：-5" class="headerlink" title="题意："></a>题意：</h4><p>平面上有$n$个点，问是否存在三个点使得它们组成的三角形的面积$=S$。保证任意三个点不在一条直线上。</p>
+<h4 id="题解：-5"><a href="#题解：-5" class="headerlink" title="题解："></a>题解：</h4><p>考虑一条直线平滑地转一圈，一对点到它的距离的大小的相对顺序当且仅当它们两个的角度和直线的角度相等时才会改变。所以我们可以把每对点连成的线段按极角$[0, \pi)$排序，并且把点按纵坐标排序。对于每条线段，我们可以在点集中二分两次，看看能不能构成答案。二分两次的原因是为了处理面积为负的情况。处理完后，交换两个端点在点集中的位置以保证处理后面的线段时点还是有序的。</p>
+<h4 id="代码：-5"><a href="#代码：-5" class="headerlink" title="代码："></a>代码：</h4><pre><code class="lang-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const double eps = 1e-7;
+int n, pos[2010]; // i号节点的位置
+long long s;
+struct pnt
+{
+    long long x, y;
+    int id;
+    pnt(long long x = 0, long long y = 0) : x(x), y(y) {}
+} a[2010];
+pnt operator-(pnt x, pnt y) {return pnt(x.x - y.x, x.y - y.y);}
+long long operator*(pnt x, pnt y) {return x.x * y.y - x.y * y.x;}
+struct seg
+{
+    int x, y;
+    double angle;
+} b[4000010];
+
+int cmp1(pnt x, pnt y)
+{
+    return x.y == y.y ? x.x &lt; y.x : x.y &lt; y.y;
+}
+int cmp2(seg x, seg y)
+{
+    return x.angle &lt; y.angle;
+}
+int main()
+{
+    scanf(&quot;%d%lld&quot;, &amp;n, &amp;s);
+    s *= 2;
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%lld%lld&quot;, &amp;a[i].x, &amp;a[i].y);
+    sort(a, a + n, cmp1);
+    int nn = 0;
+    for (int i = 0; i &lt; n; i++) pos[i] = a[i].id = i;
+    for (int i = 0; i &lt; n; i++)
+    {
+        for (int j = i + 1; j &lt; n; j++)
+            b[nn++] = {i, j, atan2(a[j].y - a[i].y, a[j].x - a[i].x)};
+    }
+    sort(b, b + nn, cmp2);
+    for (int i = 0; i &lt; nn; i++)
+    {
+        int l = 0, len = n;
+        pnt x = a[pos[b[i].x]], y = a[pos[b[i].y]];
+        while (len)
+        {
+            int md = l + (len &gt;&gt; 1);
+            if ((y - x) * (a[md] - x) &lt; s)
+            {
+                l = md + 1;
+                len = len - (len &gt;&gt; 1) - 1;
+            }
+            else len &gt;&gt;= 1;
+        }
+        if (l &lt; n &amp;&amp; (y - x) * (a[l] - x) == s)
+        {
+            printf(&quot;Yes\n%lld %lld\n%lld %lld\n%lld %lld\n&quot;, x.x, x.y, y.x, y.y, a[l].x, a[l].y);
+            return 0;
+        }
+        l = 0, len = n;
+        while (len)
+        {
+            int md = l + (len &gt;&gt; 1);
+            if ((y - x) * (a[md] - x) &lt; -s)
+            {
+                l = md + 1;
+                len = len - (len &gt;&gt; 1) - 1;
+            }
+            else len &gt;&gt;= 1;
+        }
+        if (l &lt; n &amp;&amp; (y - x) * (a[l] - x) == -s)
+        {
+            printf(&quot;Yes\n%lld %lld\n%lld %lld\n%lld %lld\n&quot;, x.x, x.y, y.x, y.y, a[l].x, a[l].y);
+            return 0;
+        }
+        swap(a[pos[b[i].x]], a[pos[b[i].y]]);
+        swap(pos[b[i].x], pos[b[i].y]);
+    }
+    puts(&quot;No&quot;);
+}
+</code></pre>
+<h3 id="div1E"><a href="#div1E" class="headerlink" title="div1E"></a>div1E</h3><h4 id="题意：-6"><a href="#题意：-6" class="headerlink" title="题意："></a>题意：</h4><p>给你一颗$n$个节点的树，$i$号边的边权为$a_i \times t + b_i$，问对于每个$t \in [0, m]$，树的直径是多少。</p>
+<h4 id="题解：-6"><a href="#题解：-6" class="headerlink" title="题解："></a>题解：</h4><p>首先要知道，所有构成答案的点$(a, b)$构成了一个上凸包，而且相邻两个点的连线的斜率$<0$。简单证明一下：首先显然左下角的点一定是劣于右上角的点的，前者的起始位置和增长速率都不及后者；然后考虑三个点$(a_i, b_i),="" (a_j,="" b_j),="" (a_k,="" b_k)$满足$a_i="" <="" a_k="" a_j,="" b_j="" b_k="" b_i,="" \frac{b_k="" -="" b_i}{a_k="" a_i}="" \frac{b_j="" b_i}{a_j="" a_i}$（即$k$在$i$的右下角，$j$在$k$的右下角，$i,k$的斜率小于$j,k$的斜率）。右下角的点之所以能成为答案，是因为它的增长率$a$高于左边的点，在某个时刻可以超过前面的点。而$k$超过$i$的时刻为$x_k="\frac{b_k" b_i}{a_i="" a_k}$，$j$超过$i$的时刻为$x_j="\frac{b_j" b_i}="" {a_i="" a_j}$，由假设可知$x_k=""> x_j$，也就是说$j$比$k$更早超过$i$，而又因为$a_k &lt; a_j$，$k$永远都追不上$j$了，所以$k$是没用的。</0$。简单证明一下：首先显然左下角的点一定是劣于右上角的点的，前者的起始位置和增长速率都不及后者；然后考虑三个点$(a_i,></p>
+<p>知道这个结论后，我们就可以用边分治做了。从当前边往两边深搜，分别维护凸包，然后合并起来，加上这条边的权值。怎么合并呢？我们要求的相当是点集$S = \{ (x, y) | (x,y)=(x_1,y_1) + (x_2, y_2), (x_1, y_1) \in S_1, (x_2, y_2) \in S_2\}$的凸包。这个就是大名鼎鼎的闵可夫斯基和。我们可以把两个集合最左边相加放进新点集中，然后归并地把两个点集中的点按极角放入新点集中。递归下去用求得的子问题答案之间更新凸包就好了。</p>
+<h4 id="代码：-6"><a href="#代码：-6" class="headerlink" title="代码："></a>代码：</h4><pre><code class="lang-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n, m;
+struct pnt
+{
+    long long a, b;
+    pnt() {}
+    pnt(long long x, long long y) : a(x), b(y) {}
+};
+pnt operator+(pnt x, pnt y) { return pnt(x.a + y.a, x.b + y.b); }
+bool operator&lt;(pnt x, pnt y) { return x.a == y.a ? x.b &lt; y.b : x.a &lt; y.a; }
+bool operator==(pnt x, pnt y) { return x.a == y.a &amp;&amp; x.b == y.b; }
+pnt operator-(pnt x, pnt y) { return pnt(x.a - y.a, x.b - y.b); }
+long long operator*(pnt x, pnt y) { return x.a * y.b - x.b * y.a; }
+class edges
+{
+  public:
+    int num = 0, fst[200010];
+    struct edge
+    {
+        int x, y, n;
+        pnt c;
+    } e[400010];
+    void ins(int x, int y, pnt c)
+    {
+        e[++num] = {x, y, fst[x], c};
+        fst[x] = num;
+    }
+} ori;
+class graph : public edges
+{
+    int sz[200010];
+    bool v[200010];
+    void get_sz(int x, int fa)
+    {
+        sz[x] = 1;
+        for (int i = fst[x]; i; i = e[i].n)
+        {
+            int y = e[i].y;
+            if (v[y] || y == fa) continue;
+            get_sz(y, x);
+            sz[x] += sz[y];
+        }
+    }
+    int get_rt(int x, int full, int fa, int from)
+    {
+        for (int i = fst[x]; i; i = e[i].n)
+        {
+            int y = e[i].y;
+            if (y != fa &amp;&amp; !v[y] &amp;&amp; sz[y] &gt;= full / 2) return get_rt(y, full, x, i);
+        }
+        return from;
+    }
+    void dfs(int x, pnt now, vector&lt;pnt&gt; &amp;s, int fa)
+    {
+        bool tf = 0;
+        for (int i = fst[x]; i; i = e[i].n)
+        {
+            int y = e[i].y;
+            if (!v[y] &amp;&amp; y != fa) dfs(y, now + e[i].c, s, x), tf = 1;
+        }
+        if (!tf) s.push_back(now);
+    }
+  public:
+    void wk(int x, vector&lt;pnt&gt; &amp;ans)
+    {
+        get_sz(x, 0);
+        if (sz[x] == 1) return;
+        int hh = get_rt(x, sz[x], 0, 0);
+        int a = e[hh].x, b = e[hh].y;
+        // printf(&quot;#%d %d\n&quot;, a, b);
+        vector&lt;pnt&gt; s1, s2, h;
+        dfs(a, pnt(0, 0), h, b);
+        sort(h.begin(), h.end());/*
+        for (pnt x : h)
+            printf(&quot;%lld %lld\n&quot;, x.a, x.b);
+        puts(&quot;&quot;);*/
+        for (pnt x : h)
+        {
+            while (!s1.empty() &amp;&amp; s1.back().b &lt;= x.b || s1.size() &gt; 1 &amp;&amp; (s1.back() - s1.end()[-2]) * (x - s1.end()[-2]) &gt;= 0)
+                s1.pop_back();
+            s1.push_back(x);
+        }
+        h.clear();
+        dfs(b, pnt(0, 0), h, a);
+        sort(h.begin(), h.end());/*
+        for (pnt x : h)
+            printf(&quot;%lld %lld\n&quot;, x.a, x.b);
+        puts(&quot;&quot;);*/
+        for (pnt x : h)
+        {
+            while (!s2.empty() &amp;&amp; s2.back().b &lt;= x.b || s2.size() &gt; 1 &amp;&amp; (s2.back() - s2.end()[-2]) * (x - s2.end()[-2]) &gt;= 0)
+                s2.pop_back();
+            s2.push_back(x);
+        }
+        h.clear();
+        h.push_back(s1[0] + s2[0]);
+        int i = 1, j = 1;
+        while (i &lt; s1.size() &amp;&amp; j &lt; s2.size())
+        {
+            if ((s1[i] - s1[i - 1]) * (s2[j] - s2[j - 1]) &lt;= 0)
+                h.push_back(h.back() + s1[i] - s1[i - 1]), i++;
+            else
+                h.push_back(h.back() + s2[j] - s2[j - 1]), j++;
+        }
+        while (i &lt; s1.size()) h.push_back(h.back() + s1[i] - s1[i - 1]), i++;
+        while (j &lt; s2.size()) h.push_back(h.back() + s2[j] - s2[j - 1]), j++;
+        for (pnt &amp;x : h)
+            x = x + e[hh].c;
+        vector&lt;pnt&gt; ans1, ans2;
+        v[b] = 1;
+        wk(a, ans1);
+        v[b] = 0;
+        v[a] = 1;
+        wk(b, ans2);
+        v[a] = v[b] = 1;/*
+        printf(&quot;#%d %d\n&quot;, a, b);
+        for (pnt x : h)
+            printf(&quot;%lld %lld\n&quot;, x.a, x.b);
+        puts(&quot;&quot;);
+        for (pnt x : ans1)
+            printf(&quot;%lld %lld\n&quot;, x.a, x.b);
+        puts(&quot;&quot;);
+        for (pnt x : ans2)
+            printf(&quot;%lld %lld\n&quot;, x.a, x.b);
+        puts(&quot;&quot;);*/
+        i = 0, j = 0;
+        int k = 0;
+        while (i &lt; ans1.size() || j &lt; ans2.size() || k &lt; h.size())
+        {
+            pnt x(1LL &lt;&lt; 62, 1LL &lt;&lt; 62);
+            if (i &lt; ans1.size() &amp;&amp; ans1[i] &lt; x) x = ans1[i];
+            if (j &lt; ans2.size() &amp;&amp; ans2[j] &lt; x) x = ans2[j];
+            if (k &lt; h.size() &amp;&amp; h[k] &lt; x) x = h[k];
+            if (i &lt; ans1.size() &amp;&amp; x == ans1[i]) i++;
+            else if (j &lt; ans2.size() &amp;&amp; x == ans2[j]) j++;
+            else k++;
+            while (!ans.empty() &amp;&amp; ans.back().b &lt;= x.b || ans.size() &gt; 1 &amp;&amp; (ans.back() - ans.end()[-2]) * (x - ans.end()[-2]) &gt;= 0)
+                ans.pop_back();
+            ans.push_back(x);
+        }
+    }
+} bin;
+
+void build_bin(int x, int fa)
+{
+    int last = x;
+    for (int i = ori.fst[x]; i; i = ori.e[i].n)
+    {
+        int y = ori.e[i].y;
+        if (y == fa) continue;
+        build_bin(y, x);
+        bin.ins(last, ++n, pnt(0, 0));
+        bin.ins(n, last, pnt(0, 0));
+        last = n;
+        bin.ins(n, y, ori.e[i].c);
+        bin.ins(y, n, ori.e[i].c);
+    }
+}
+int main()
+{
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt; n; i++)
+    {
+        int x, y, a, b;
+        scanf(&quot;%d%d%d%d&quot;, &amp;x, &amp;y, &amp;a, &amp;b);
+        ori.ins(x, y, pnt(a, b));
+        ori.ins(y, x, pnt(a, b));
+    }
+    build_bin(1, 0);/*
+    puts(&quot;&quot;);
+    for (int i = 1; i &lt;= bin.num; i += 2)
+        printf(&quot;%d %d %lld %lld\n&quot;, bin.e[i].x, bin.e[i].y, bin.e[i].c.a, bin.e[i].c.b);*/
+    vector&lt;pnt&gt; ans;
+    bin.wk(1, ans);
+    long long now = 0;/*
+    puts(&quot;======&quot;);
+    for (pnt x : ans)
+        printf(&quot;%lld %lld\n&quot;, x.a, x.b);*/
+    if (ans.empty())
+    {
+        for (int i = 0; i &lt; m; i++) printf(&quot;0 &quot;);
+        puts(&quot;&quot;);
+        return 0;
+    }
+    for (int i = 0, j = 1; i &lt; m; i++)
+    {
+        now = ans[j - 1].a * i + ans[j - 1].b;
+        while (j &lt; ans.size() &amp;&amp; i * ans[j].a + ans[j].b &gt; now) now = i * ans[j].a + ans[j].b, j++;
+        printf(&quot;%lld &quot;, now);
+    }
+    puts(&quot;&quot;);
+}
+</code></pre>
+
+  </article>
+
+  
+    
+  <div class="nexmoe-post-copyright">
+    <strong>本文作者：</strong>tkj<br>
+    <strong>本文链接：</strong><a href="https://tkj666.github.io/95/" title="https://tkj666.github.io/95/" target="_blank" rel="noopener">https://tkj666.github.io/95/</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+        <a class="nexmoefont icon-tag-fill -link" href="/tags/cf/">cf</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/交互题/">交互题</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/凸包/">凸包</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/构造/">构造</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/计算几何/">计算几何</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/贪心/">贪心</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/边分治/">边分治</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/闵可夫斯基和/">闵可夫斯基和</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'bacf615502a9dd39b33a',
+        clientSecret: 'ccd4771fed399fa683cb90deef08fe228b2640fc',
+        id: window.location.pathname,
+        repo: 'tkj666.github.io',
+        owner: 'tkj666',
+        admin: 'tkj666'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+  </div>
+</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script>
+	hljs.initHighlightingOnLoad();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
+ <script src="/js/app.js?v=1607492510532"></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

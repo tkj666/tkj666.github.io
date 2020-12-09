@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  
+  <title>bzoj 4558: [JLoi2016]方 - tkj&#39;s Blog</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="null">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
+  <meta name="description" content="题意：$(n + 1) \times (m + 1)$的网格图上，有$K$个点不能用，问剩下的点能组成多少正方形。斜着的也算">
+<meta name="keywords" content="容斥">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bzoj 4558: [JLoi2016]方">
+<meta property="og:url" content="https://tkj666.github.io/137/index.html">
+<meta property="og:site_name" content="tkj&#39;s Blog">
+<meta property="og:description" content="题意：$(n + 1) \times (m + 1)$的网格图上，有$K$个点不能用，问剩下的点能组成多少正方形。斜着的也算">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-09T03:04:25.347Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bzoj 4558: [JLoi2016]方">
+<meta name="twitter:description" content="题意：$(n + 1) \times (m + 1)$的网格图上，有$K$个点不能用，问剩下的点能组成多少正方形。斜着的也算">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
+  
+  <link rel="stylesheet" href="/css/style.css?v=1607492509820">
+</head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(/img/background.jpg)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="tkj" class="mdui-btn mdui-btn-icon"><img src="/img/avatar.png" alt="tkj"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="tkj">
+            <img src="/img/avatar.png" alt="tkj" alt="tkj">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>142</div>
+        <div><span>标签</span>99</div>
+        <div><span>分类</span>0</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        <form id="search_form" action_e="https://cn.bing.com/search?q=site:tkj666.github.io" onsubmit="return search();">
+            <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+        </form>
+    </div>
+</div>
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://github.com/tkj666/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">            <i class="nexmoefont icon-github"></i>
+        </a>
+    </div>
+</div>
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AC自动机/" style="font-size: 11.82px;">AC自动机</a> <a href="/tags/C-语言/" style="font-size: 10px;">C++语言</a> <a href="/tags/DP/" style="font-size: 20px;">DP</a> <a href="/tags/LCA/" style="font-size: 11.82px;">LCA</a> <a href="/tags/Prufer序列/" style="font-size: 10.91px;">Prüfer序列</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/bitset/" style="font-size: 10px;">bitset</a> <a href="/tags/cf/" style="font-size: 10px;">cf</a> <a href="/tags/dfs/" style="font-size: 11.82px;">dfs</a> <a href="/tags/dfs序/" style="font-size: 12.73px;">dfs序</a> <a href="/tags/dp/" style="font-size: 10.91px;">dp</a> <a href="/tags/exgcd/" style="font-size: 10px;">exgcd</a> <a href="/tags/fft/" style="font-size: 10.91px;">fft</a> <a href="/tags/gcd/" style="font-size: 11.82px;">gcd</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/lca/" style="font-size: 10px;">lca</a> <a href="/tags/material/" style="font-size: 10px;">material</a> <a href="/tags/mathjax/" style="font-size: 10px;">mathjax</a> <a href="/tags/pbds/" style="font-size: 10px;">pbds</a> <a href="/tags/set/" style="font-size: 11.82px;">set</a> <a href="/tags/splay/" style="font-size: 13.64px;">splay</a> <a href="/tags/stl/" style="font-size: 10.91px;">stl</a> <a href="/tags/tarjan/" style="font-size: 10px;">tarjan</a> <a href="/tags/trie/" style="font-size: 12.73px;">trie</a> <a href="/tags/三分/" style="font-size: 10px;">三分</a> <a href="/tags/主席树/" style="font-size: 12.73px;">主席树</a> <a href="/tags/乱搞/" style="font-size: 11.82px;">乱搞</a> <a href="/tags/二分/" style="font-size: 18.18px;">二分</a> <a href="/tags/二分图/" style="font-size: 10px;">二分图</a> <a href="/tags/二分图匹配/" style="font-size: 10px;">二分图匹配</a> <a href="/tags/交互题/" style="font-size: 10px;">交互题</a> <a href="/tags/储存原理/" style="font-size: 10px;">储存原理</a> <a href="/tags/凸包/" style="font-size: 10.91px;">凸包</a> <a href="/tags/分块/" style="font-size: 11.82px;">分块</a> <a href="/tags/分数规划/" style="font-size: 10px;">分数规划</a> <a href="/tags/分治/" style="font-size: 11.82px;">分治</a> <a href="/tags/切比雪夫距离/" style="font-size: 10px;">切比雪夫距离</a> <a href="/tags/半平面交/" style="font-size: 10px;">半平面交</a> <a href="/tags/单位根反演/" style="font-size: 10.91px;">单位根反演</a> <a href="/tags/单调队列/" style="font-size: 10px;">单调队列</a> <a href="/tags/博弈/" style="font-size: 11.82px;">博弈</a> <a href="/tags/可并堆/" style="font-size: 10px;">可并堆</a> <a href="/tags/可持久化trie/" style="font-size: 10px;">可持久化trie</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/后缀自动机/" style="font-size: 10.91px;">后缀自动机</a> <a href="/tags/哈希/" style="font-size: 12.73px;">哈希</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/容斥/" style="font-size: 10.91px;">容斥</a> <a href="/tags/对偶图/" style="font-size: 10px;">对偶图</a> <a href="/tags/差分约束/" style="font-size: 10px;">差分约束</a> <a href="/tags/平衡树/" style="font-size: 10px;">平衡树</a> <a href="/tags/并查集/" style="font-size: 10.91px;">并查集</a> <a href="/tags/快速幂/" style="font-size: 12.73px;">快速幂</a> <a href="/tags/打表/" style="font-size: 10.91px;">打表</a> <a href="/tags/扫描线/" style="font-size: 10.91px;">扫描线</a> <a href="/tags/拓扑序/" style="font-size: 10.91px;">拓扑序</a> <a href="/tags/排序/" style="font-size: 10.91px;">排序</a> <a href="/tags/插头DP/" style="font-size: 10px;">插头DP</a> <a href="/tags/搜索/" style="font-size: 10px;">搜索</a> <a href="/tags/数位DP/" style="font-size: 12.73px;">数位DP</a> <a href="/tags/数学/" style="font-size: 14.55px;">数学</a> <a href="/tags/数论/" style="font-size: 15.45px;">数论</a> <a href="/tags/斯坦纳树/" style="font-size: 10.91px;">斯坦纳树</a> <a href="/tags/暴力/" style="font-size: 10px;">暴力</a> <a href="/tags/曼哈顿距离/" style="font-size: 10px;">曼哈顿距离</a> <a href="/tags/最小割/" style="font-size: 10px;">最小割</a> <a href="/tags/最短路/" style="font-size: 12.73px;">最短路</a> <a href="/tags/最长上升子序列/" style="font-size: 10px;">最长上升子序列</a> <a href="/tags/最长公共子序列/" style="font-size: 10px;">最长公共子序列</a> <a href="/tags/期望/" style="font-size: 10.91px;">期望</a> <a href="/tags/权值线段树/" style="font-size: 10px;">权值线段树</a> <a href="/tags/构造/" style="font-size: 10px;">构造</a> <a href="/tags/树套树/" style="font-size: 10px;">树套树</a> <a href="/tags/树形DP/" style="font-size: 14.55px;">树形DP</a> <a href="/tags/树形dp/" style="font-size: 10px;">树形dp</a> <a href="/tags/树状数组/" style="font-size: 14.55px;">树状数组</a> <a href="/tags/树的直径/" style="font-size: 10.91px;">树的直径</a> <a href="/tags/模拟/" style="font-size: 10px;">模拟</a> <a href="/tags/游记/" style="font-size: 10.91px;">游记</a> <a href="/tags/点分治/" style="font-size: 10px;">点分治</a> <a href="/tags/状压DP/" style="font-size: 14.55px;">状压DP</a> <a href="/tags/矩阵乘法/" style="font-size: 16.36px;">矩阵乘法</a> <a href="/tags/离散化/" style="font-size: 12.73px;">离散化</a> <a href="/tags/线性基/" style="font-size: 10px;">线性基</a> <a href="/tags/线段树/" style="font-size: 19.09px;">线段树</a> <a href="/tags/线段树分治/" style="font-size: 10px;">线段树分治</a> <a href="/tags/组合数学/" style="font-size: 14.55px;">组合数学</a> <a href="/tags/网络流/" style="font-size: 11.82px;">网络流</a> <a href="/tags/莫队/" style="font-size: 10.91px;">莫队</a> <a href="/tags/虚树/" style="font-size: 10px;">虚树</a> <a href="/tags/裴蜀定理/" style="font-size: 11.82px;">裴蜀定理</a> <a href="/tags/计算几何/" style="font-size: 17.27px;">计算几何</a> <a href="/tags/贪心/" style="font-size: 12.73px;">贪心</a> <a href="/tags/费用流/" style="font-size: 10.91px;">费用流</a> <a href="/tags/辛普森积分法/" style="font-size: 10px;">辛普森积分法</a> <a href="/tags/边分治/" style="font-size: 10px;">边分治</a> <a href="/tags/错排公式/" style="font-size: 10px;">错排公式</a> <a href="/tags/闵可夫斯基和/" style="font-size: 10px;">闵可夫斯基和</a> <a href="/tags/高精度/" style="font-size: 10.91px;">高精度</a>
+    </div>
+    
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">54</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">72</span></li></ul>
+    </div>
+  </div>
+
+
+<style>
+.nexmoe-widget .archive-list-count{
+	position : absolute;
+	right: 15px;
+	top:9px;
+	color: #DDD;
+}
+</style>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2020 tkj
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+  
+      <div class="nexmoe-post-cover" style="padding-bottom: 6.666666666666667%;"> 
+          <img data-src="/img/background.jpg" data-sizes="auto" alt="bzoj 4558: [JLoi2016]方" class="lazyload">
+          <h1>bzoj 4558: [JLoi2016]方</h1>
+      </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2019年01月30日</a>
+    <a><i class="nexmoefont icon-areachart"></i>1.1k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 6 分钟</a>
+</div>
+
+  <div class="nexmoe-post-right">
+    
+      <div class="nexmoe-fixed">
+        <div class="nexmoe-valign">
+            <div class="nexmoe-toc">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题意："><span class="toc-number">1.</span> <span class="toc-text">题意：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题解："><span class="toc-number">2.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码："><span class="toc-number">3.</span> <span class="toc-text">代码：</span></a></li></ol>
+            </div>
+        </div>
+      </div>
+    
+  </div>
+
+  <article>
+    <h2 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h2><p>$(n + 1) \times (m + 1)$的网格图上，有$K$个点不能用，问剩下的点能组成多少正方形。<strong>斜着的也算</strong><br><a id="more"></a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><p><a href="https://loj.ac/problem/2025" target="_blank" rel="noopener">loj上有更棒的样例，还有解释</a><br>我们可以先不管不能用的点，然后减去不合法的正方形。正着的正方形比较好搞，对于斜着的，我们可以用一个大正方形框起来，然后可以发现如果确定了大正方形和它上面的一个点，那么我们就可以确定一个斜着的正方形，而且是一一对应的。正着的正方形也可以归到里面。所有正方形显然就是$\displaystyle \sum_{i = 1}^{\min(n, m)} (n - i + 1)(m - i + 1)i$。不合法的正方形的个数可以用容斥来搞，就是-一个点不合法的+两个点不合法的-三个点不合法的+四个点不合法的。一个点不合法的方案就是这个不合法的点在多少正方形上。我们可以分别计算它在上下左右每条边上的方案数，减去四个角上记重的就好了。两个点就$K^2$枚举吧，注意它们作为对角线时的情况。如果确定了两个点，那么第三个和第四个点都可以出来了，就可以顺便计算三个点不合法和四个点不合法的方案数了。复杂度$O(K^2logK)$，套了一个<code>set</code>来看第三和第四个点是不是不能用的。</p>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><pre><code class="lang-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int mod = 100000007, inv3 = (mod + 1) / 3, inv6 = (mod + 1) / 6;
+long long n, m, K, ans = 0;
+struct pnt
+{
+    long long x, y;
+} a[2010];
+set&lt;long long&gt; mp;
+
+long long calc(long long n, long long m, long long pos)
+{
+    long long mn = min(pos, m - pos), mx = max(pos, m - pos);
+    if (m &lt; n)
+        return (mn + (1 + mn) * mn / 2 % mod + (mx - mn) * (mn + 1) % mod + (1 + m - mx) * (m - mx) / 2 % mod) % mod;
+    else
+    {
+        if (n &lt; mn) return (2 + n + 1) * n / 2 % mod;
+        else
+        {
+            long long ans = (2 + mn + 1) * mn / 2 % mod;
+            if (n &lt; mx) return (ans + (mn + 1) * (n - mn) % mod) % mod;
+            else return (ans + (mn + 1) * (mx - mn) % mod + (m - n + 1 + m - mx) * (n - mx) / 2 % mod) % mod;
+        }
+    }
+}
+int main()
+{
+    scanf(&quot;%lld%lld%lld&quot;, &amp;n, &amp;m, &amp;K);
+    for (int i = 1; i &lt;= min(n, m); i++)
+        ans = (ans + (n - i + 1) * (m - i + 1) % mod * i % mod) % mod;
+    // printf(&quot;%lld\n&quot;, ans);
+    for (int i = 0; i &lt; K; i++)
+    {
+        scanf(&quot;%lld%lld&quot;, &amp;a[i].x, &amp;a[i].y);
+        (ans -= calc(a[i].x, m, a[i].y)) %= mod;
+        // printf(&quot;%lld\n&quot;, ans);
+        (ans -= calc(m - a[i].y, n, a[i].x)) %= mod;
+        // printf(&quot;%lld\n&quot;, ans);
+        (ans -= calc(n - a[i].x, m, m - a[i].y)) %= mod;
+        // printf(&quot;%lld\n&quot;, ans);
+        (ans -= calc(a[i].y, n, n - a[i].x)) %= mod;
+        // printf(&quot;%lld\n&quot;, ans);
+        (ans += min(a[i].x, a[i].y) + min(a[i].x, m - a[i].y) + min(n - a[i].x, a[i].y) + min(n - a[i].x, m - a[i].y)) %= mod;
+        // printf(&quot;%lld\n&quot;, ans);
+        mp.insert(a[i].x * 1000010 + a[i].y);
+    }
+    long long hh3 = 0, hh4 = 0;
+    for (int i = 0; i &lt; K; i++)
+        for (int j = i + 1; j &lt; K; j++)
+        {
+            long long xx = a[j].x - a[i].x, yy = a[j].y - a[i].y;
+            long long x1 = a[i].x + yy, y1 = a[i].y - xx, x2 = a[j].x + yy, y2 = a[j].y - xx;
+            if (x1 &gt;= 0 &amp;&amp; x1 &lt;= n &amp;&amp; x2 &gt;= 0 &amp;&amp; x2 &lt;= n &amp;&amp; y1 &gt;= 0 &amp;&amp; y1 &lt;= m &amp;&amp; y2 &gt;= 0 &amp;&amp; y2 &lt;= m)
+            {
+            // printf(&quot;%lld %lld\n%lld %lld\n%lld %lld\n%lld %lld\n\n&quot;, a[i].x, a[i].y, a[j].x, a[j].y, x1, y1, x2, y2);
+                ans++;
+                bool tf1 = mp.count(x1 * 1000010 + y1), tf2 = mp.count(x2 * 1000010 + y2);
+                if (tf1) hh3++;
+                if (tf2) hh3++;
+                if (tf1 &amp;&amp; tf2) hh4++;
+            }
+            x1 = a[i].x - yy, y1 = a[i].y + xx, x2 = a[j].x - yy, y2 = a[j].y + xx;
+            if (x1 &gt;= 0 &amp;&amp; x1 &lt;= n &amp;&amp; x2 &gt;= 0 &amp;&amp; x2 &lt;= n &amp;&amp; y1 &gt;= 0 &amp;&amp; y1 &lt;= m &amp;&amp; y2 &gt;= 0 &amp;&amp; y2 &lt;= m)
+            {
+            // printf(&quot;%lld %lld\n%lld %lld\n%lld %lld\n%lld %lld\n\n&quot;, a[i].x, a[i].y, a[j].x, a[j].y, x1, y1, x2, y2);
+                ans++;
+                bool tf1 = mp.count(x1 * 1000010 + y1), tf2 = mp.count(x2 * 1000010 + y2);
+                if (tf1) hh3++;
+                if (tf2) hh3++;
+                if (tf1 &amp;&amp; tf2) hh4++;
+            }
+            if (abs(xx % 2) == abs(yy % 2))
+            {
+                x1 = a[i].x + (xx + yy) / 2, y1 = a[i].y + (yy - xx) / 2, x2 = x1 - yy, y2 = y1 + xx;
+                if (x1 &gt;= 0 &amp;&amp; x1 &lt;= n &amp;&amp; x2 &gt;= 0 &amp;&amp; x2 &lt;= n &amp;&amp; y1 &gt;= 0 &amp;&amp; y1 &lt;= m &amp;&amp; y2 &gt;= 0 &amp;&amp; y2 &lt;= m)
+                {
+                // printf(&quot;%lld %lld\n%lld %lld\n%lld %lld\n%lld %lld\n\n&quot;, a[i].x, a[i].y, a[j].x, a[j].y, x1, y1, x2, y2);
+                    ans++;
+                    bool tf1 = mp.count(x1 * 1000010 + y1), tf2 = mp.count(x2 * 1000010 + y2);
+                    if (tf1) hh3++;
+                    if (tf2) hh3++;
+                    if (tf1 &amp;&amp; tf2) hh4++;
+                }
+            }
+        }
+    printf(&quot;%lld\n&quot;, ((ans - hh3 * inv3 % mod + hh4 * inv6 % mod) % mod + mod) % mod);
+}
+</code></pre>
+
+  </article>
+
+  
+    
+  <div class="nexmoe-post-copyright">
+    <strong>本文作者：</strong>tkj<br>
+    <strong>本文链接：</strong><a href="https://tkj666.github.io/137/" title="https://tkj666.github.io/137/" target="_blank" rel="noopener">https://tkj666.github.io/137/</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+        <a class="nexmoefont icon-tag-fill -link" href="/tags/容斥/">容斥</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'bacf615502a9dd39b33a',
+        clientSecret: 'ccd4771fed399fa683cb90deef08fe228b2640fc',
+        id: window.location.pathname,
+        repo: 'tkj666.github.io',
+        owner: 'tkj666',
+        admin: 'tkj666'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+  </div>
+</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script>
+	hljs.initHighlightingOnLoad();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
+ <script src="/js/app.js?v=1607492509839"></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

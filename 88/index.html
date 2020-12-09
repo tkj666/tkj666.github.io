@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  
+  <title>bzoj 5186: [Usaco2018 Jan]Cow at Large - tkj&#39;s Blog</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="null">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
+  <meta name="description" content=".">
+<meta name="keywords" content="DP,树形DP,点分治">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bzoj 5186: [Usaco2018 Jan]Cow at Large">
+<meta property="og:url" content="https://tkj666.github.io/88/index.html">
+<meta property="og:site_name" content="tkj&#39;s Blog">
+<meta property="og:description" content=".">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-09T03:04:25.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bzoj 5186: [Usaco2018 Jan]Cow at Large">
+<meta name="twitter:description" content=".">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
+  
+  <link rel="stylesheet" href="/css/style.css?v=1607492510576">
+</head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(/img/background.jpg)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="tkj" class="mdui-btn mdui-btn-icon"><img src="/img/avatar.png" alt="tkj"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="tkj">
+            <img src="/img/avatar.png" alt="tkj" alt="tkj">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>142</div>
+        <div><span>标签</span>99</div>
+        <div><span>分类</span>0</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        <form id="search_form" action_e="https://cn.bing.com/search?q=site:tkj666.github.io" onsubmit="return search();">
+            <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+        </form>
+    </div>
+</div>
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://github.com/tkj666/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">            <i class="nexmoefont icon-github"></i>
+        </a>
+    </div>
+</div>
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AC自动机/" style="font-size: 11.82px;">AC自动机</a> <a href="/tags/C-语言/" style="font-size: 10px;">C++语言</a> <a href="/tags/DP/" style="font-size: 20px;">DP</a> <a href="/tags/LCA/" style="font-size: 11.82px;">LCA</a> <a href="/tags/Prufer序列/" style="font-size: 10.91px;">Prüfer序列</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/bitset/" style="font-size: 10px;">bitset</a> <a href="/tags/cf/" style="font-size: 10px;">cf</a> <a href="/tags/dfs/" style="font-size: 11.82px;">dfs</a> <a href="/tags/dfs序/" style="font-size: 12.73px;">dfs序</a> <a href="/tags/dp/" style="font-size: 10.91px;">dp</a> <a href="/tags/exgcd/" style="font-size: 10px;">exgcd</a> <a href="/tags/fft/" style="font-size: 10.91px;">fft</a> <a href="/tags/gcd/" style="font-size: 11.82px;">gcd</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/lca/" style="font-size: 10px;">lca</a> <a href="/tags/material/" style="font-size: 10px;">material</a> <a href="/tags/mathjax/" style="font-size: 10px;">mathjax</a> <a href="/tags/pbds/" style="font-size: 10px;">pbds</a> <a href="/tags/set/" style="font-size: 11.82px;">set</a> <a href="/tags/splay/" style="font-size: 13.64px;">splay</a> <a href="/tags/stl/" style="font-size: 10.91px;">stl</a> <a href="/tags/tarjan/" style="font-size: 10px;">tarjan</a> <a href="/tags/trie/" style="font-size: 12.73px;">trie</a> <a href="/tags/三分/" style="font-size: 10px;">三分</a> <a href="/tags/主席树/" style="font-size: 12.73px;">主席树</a> <a href="/tags/乱搞/" style="font-size: 11.82px;">乱搞</a> <a href="/tags/二分/" style="font-size: 18.18px;">二分</a> <a href="/tags/二分图/" style="font-size: 10px;">二分图</a> <a href="/tags/二分图匹配/" style="font-size: 10px;">二分图匹配</a> <a href="/tags/交互题/" style="font-size: 10px;">交互题</a> <a href="/tags/储存原理/" style="font-size: 10px;">储存原理</a> <a href="/tags/凸包/" style="font-size: 10.91px;">凸包</a> <a href="/tags/分块/" style="font-size: 11.82px;">分块</a> <a href="/tags/分数规划/" style="font-size: 10px;">分数规划</a> <a href="/tags/分治/" style="font-size: 11.82px;">分治</a> <a href="/tags/切比雪夫距离/" style="font-size: 10px;">切比雪夫距离</a> <a href="/tags/半平面交/" style="font-size: 10px;">半平面交</a> <a href="/tags/单位根反演/" style="font-size: 10.91px;">单位根反演</a> <a href="/tags/单调队列/" style="font-size: 10px;">单调队列</a> <a href="/tags/博弈/" style="font-size: 11.82px;">博弈</a> <a href="/tags/可并堆/" style="font-size: 10px;">可并堆</a> <a href="/tags/可持久化trie/" style="font-size: 10px;">可持久化trie</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/后缀自动机/" style="font-size: 10.91px;">后缀自动机</a> <a href="/tags/哈希/" style="font-size: 12.73px;">哈希</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/容斥/" style="font-size: 10.91px;">容斥</a> <a href="/tags/对偶图/" style="font-size: 10px;">对偶图</a> <a href="/tags/差分约束/" style="font-size: 10px;">差分约束</a> <a href="/tags/平衡树/" style="font-size: 10px;">平衡树</a> <a href="/tags/并查集/" style="font-size: 10.91px;">并查集</a> <a href="/tags/快速幂/" style="font-size: 12.73px;">快速幂</a> <a href="/tags/打表/" style="font-size: 10.91px;">打表</a> <a href="/tags/扫描线/" style="font-size: 10.91px;">扫描线</a> <a href="/tags/拓扑序/" style="font-size: 10.91px;">拓扑序</a> <a href="/tags/排序/" style="font-size: 10.91px;">排序</a> <a href="/tags/插头DP/" style="font-size: 10px;">插头DP</a> <a href="/tags/搜索/" style="font-size: 10px;">搜索</a> <a href="/tags/数位DP/" style="font-size: 12.73px;">数位DP</a> <a href="/tags/数学/" style="font-size: 14.55px;">数学</a> <a href="/tags/数论/" style="font-size: 15.45px;">数论</a> <a href="/tags/斯坦纳树/" style="font-size: 10.91px;">斯坦纳树</a> <a href="/tags/暴力/" style="font-size: 10px;">暴力</a> <a href="/tags/曼哈顿距离/" style="font-size: 10px;">曼哈顿距离</a> <a href="/tags/最小割/" style="font-size: 10px;">最小割</a> <a href="/tags/最短路/" style="font-size: 12.73px;">最短路</a> <a href="/tags/最长上升子序列/" style="font-size: 10px;">最长上升子序列</a> <a href="/tags/最长公共子序列/" style="font-size: 10px;">最长公共子序列</a> <a href="/tags/期望/" style="font-size: 10.91px;">期望</a> <a href="/tags/权值线段树/" style="font-size: 10px;">权值线段树</a> <a href="/tags/构造/" style="font-size: 10px;">构造</a> <a href="/tags/树套树/" style="font-size: 10px;">树套树</a> <a href="/tags/树形DP/" style="font-size: 14.55px;">树形DP</a> <a href="/tags/树形dp/" style="font-size: 10px;">树形dp</a> <a href="/tags/树状数组/" style="font-size: 14.55px;">树状数组</a> <a href="/tags/树的直径/" style="font-size: 10.91px;">树的直径</a> <a href="/tags/模拟/" style="font-size: 10px;">模拟</a> <a href="/tags/游记/" style="font-size: 10.91px;">游记</a> <a href="/tags/点分治/" style="font-size: 10px;">点分治</a> <a href="/tags/状压DP/" style="font-size: 14.55px;">状压DP</a> <a href="/tags/矩阵乘法/" style="font-size: 16.36px;">矩阵乘法</a> <a href="/tags/离散化/" style="font-size: 12.73px;">离散化</a> <a href="/tags/线性基/" style="font-size: 10px;">线性基</a> <a href="/tags/线段树/" style="font-size: 19.09px;">线段树</a> <a href="/tags/线段树分治/" style="font-size: 10px;">线段树分治</a> <a href="/tags/组合数学/" style="font-size: 14.55px;">组合数学</a> <a href="/tags/网络流/" style="font-size: 11.82px;">网络流</a> <a href="/tags/莫队/" style="font-size: 10.91px;">莫队</a> <a href="/tags/虚树/" style="font-size: 10px;">虚树</a> <a href="/tags/裴蜀定理/" style="font-size: 11.82px;">裴蜀定理</a> <a href="/tags/计算几何/" style="font-size: 17.27px;">计算几何</a> <a href="/tags/贪心/" style="font-size: 12.73px;">贪心</a> <a href="/tags/费用流/" style="font-size: 10.91px;">费用流</a> <a href="/tags/辛普森积分法/" style="font-size: 10px;">辛普森积分法</a> <a href="/tags/边分治/" style="font-size: 10px;">边分治</a> <a href="/tags/错排公式/" style="font-size: 10px;">错排公式</a> <a href="/tags/闵可夫斯基和/" style="font-size: 10px;">闵可夫斯基和</a> <a href="/tags/高精度/" style="font-size: 10.91px;">高精度</a>
+    </div>
+    
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">54</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">72</span></li></ul>
+    </div>
+  </div>
+
+
+<style>
+.nexmoe-widget .archive-list-count{
+	position : absolute;
+	right: 15px;
+	top:9px;
+	color: #DDD;
+}
+</style>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2020 tkj
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+  
+      <div class="nexmoe-post-cover" style="padding-bottom: 6.666666666666667%;"> 
+          <img data-src="/img/background.jpg" data-sizes="auto" alt="bzoj 5186: [Usaco2018 Jan]Cow at Large" class="lazyload">
+          <h1>bzoj 5186: [Usaco2018 Jan]Cow at Large</h1>
+      </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2018年03月05日</a>
+    <a><i class="nexmoefont icon-areachart"></i>1.1k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 6 分钟</a>
+</div>
+
+  <div class="nexmoe-post-right">
+    
+      <div class="nexmoe-fixed">
+        <div class="nexmoe-valign">
+            <div class="nexmoe-toc">
+                
+            </div>
+        </div>
+      </div>
+    
+  </div>
+
+  <article>
+    <p>.<br><a id="more"></a><br>题意：给出一棵树，牛从某个点出发，农夫从叶子出发来抓住牛。问对于牛的每个出发点，最少需要几个农夫。<br>题解：点分治<br>设点$x$到最近的叶子节点的距离为$L(x)$。首先，走回头路肯定是不优的，所以农夫只会往根走，牛只会往叶子走。又因为两者速度相等，所以只会相遇，不会追上。那么相遇的地方x只要满足农民比牛到得早就可以了，即$L(x)≤depth(x)$。这些点构成了一棵棵子树，而每棵子树只需要一个农夫。所以我们可以把这些点赋一个权值$2−degree(x)$，一棵子树的权值和就是$1$。直接搞显然过不去，我们可以点分治一下。设$d(x)$为分支中心到$x$的距离。两个不同子树里的点$x,y$的距离就是$d(x)+d(y)$。所以当$y$作为出发点时，对答案产生贡献的点$x$就要满足<script type="math/tex">L(x)≤d(x)+d(y) \\\ L(x)−d(x)≤d(y)</script>开一个s数组，<code>s[L(x) - d(x)] += 2 - degree(x)</code>，然后取个前缀和，<code>s[y]</code>就表示了会对$y$产生的贡献和。注意要减去$x,y$在同一颗子树里的情况。求$L$的话随便DP一下就好了。</p>
+<p>点分打错T到飞起，L也求错了。。我真菜qwq<br>代码：</p>
+<pre><code class="lang-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n, sz[70010], root, num = 0, fst[70010];
+struct edge
+{
+    int x, y, n;
+} e[140010];
+struct pnt
+{
+    // int deg = 0, L = 2147483647, ans = 0;
+    int deg, L, ans;
+    bool v;
+    pnt()
+    {
+        deg = ans = v = 0;
+        L = 2147483647;
+    }
+} p[70010];
+struct table
+{
+    int S[140010], mn, mx, zero;
+    bool got;
+    table()
+    {
+        zero = got = mn = mx = 0;
+        memset(S, 0, sizeof(S));
+    }
+    void clear()
+    {
+        memset(S + mn + 70005, 0, sizeof(int) * (mx - mn + 1));
+        mn = mx = got = 0;
+    }
+    int &amp;operator[](int x)
+    { /*
+        assert(x + 70005 &gt;= 0 &amp;&amp; x + 70005 &lt; 140010);
+        if (x + 70005 &lt; 0 || x + 70005 &gt; 140010)
+        {
+            printf(&quot;%d\n&quot;, x);
+            assert(0);
+        }*/
+        if (!got)
+        {
+            mn = min(mn, x);
+            mx = max(mx, x);
+        }
+        if (x &lt; mn)
+            return zero;
+        else if (x &gt; mx)
+            return S[70005 + mx];
+        else
+            return S[70005 + x];
+    }
+    void gsum()
+    {
+        got = 1;
+        int l = mn + 1 + 70005, r = mx + 70005;
+        for (int i = l; i &lt;= r; i++)
+            S[i] += S[i - 1];
+    }
+} s1, s2;
+
+void getL1(int x, int fa)
+{
+    if (p[x].deg == 1)
+    {
+        p[x].L = 0;
+    }
+    for (int i = fst[x]; i; i = e[i].n)
+    {
+        int y = e[i].y;
+        if (y == fa)
+            continue;
+        getL1(y, x);
+        p[x].L = min(p[x].L, p[y].L + 1);
+    }
+}
+void getL2(int x, int fa)
+{
+    if (fa)
+        p[x].L = min(p[x].L, p[fa].L + 1);
+    for (int i = fst[x]; i; i = e[i].n)
+    {
+        int y = e[i].y;
+        if (y == fa)
+            continue;
+        getL2(y, x);
+    }
+}
+void getsz(int x, int fa)
+{
+    sz[x] = 1;
+    for (int i = fst[x]; i; i = e[i].n)
+    {
+        int y = e[i].y;
+        if (p[y].v || y == fa)
+            continue;
+        getsz(y, x);
+        sz[x] += sz[y];
+    }
+}
+int gr(int x, int fa, int full)
+{
+    for (int i = fst[x]; i; i = e[i].n)
+    {
+        int y = e[i].y;
+        if (y != fa &amp;&amp; !p[y].v &amp;&amp; (sz[y] &lt;&lt; 1) &gt;= full)
+            return gr(y, x, full);
+    }
+    return x;
+}
+void getroot(int x, int fa)
+{
+    getsz(x, fa);
+    root = gr(x, fa, sz[x]);
+}
+void dfs(table &amp;s, int x, int fa, int dep)
+{
+    // printf(&quot;%d\n&quot;, x);
+    s[p[x].L - dep] += 2 - p[x].deg;
+    for (int i = fst[x]; i; i = e[i].n)
+    {
+        int y = e[i].y;
+        if (y == fa || p[y].v)
+            continue;
+        dfs(s, y, x, dep + 1);
+    }
+}
+void update(table &amp;s1, table &amp;s2, int x, int fa, int dep)
+{
+    if (p[x].deg != 1)
+        p[x].ans += s1[dep] - s2[dep];
+    for (int i = fst[x]; i; i = e[i].n)
+    {
+        int y = e[i].y;
+        if (y == fa || p[y].v)
+            continue;
+        update(s1, s2, y, x, dep + 1);
+    }
+}
+void wk(int x)
+{
+    // printf(&quot;s1:%d\n&quot;, x);
+    s1.clear();
+    dfs(s1, x, 0, 0);
+    s1.gsum();
+    if (p[x].L)
+        p[x].ans += s1[0]; /*
+    for (int i = s1.mn; i &lt;= s1.mx; i++)
+        printf(&quot;%d %d\n&quot;, i, s1[i]);*/
+    p[x].v = 1;
+    for (int i = fst[x]; i; i = e[i].n)
+    {
+        int y = e[i].y;
+        if (p[y].v)
+            continue;
+        s2.clear();
+        dfs(s2, y, x, 1);
+        s2.gsum(); /*
+        printf(&quot;s2:%d\n&quot;, y);
+        for (int j = s2.mn; j &lt;= s2.mx; j++)
+            printf(&quot;%d %d\n&quot;, j, s2[j]);*/
+        update(s1, s2, y, x, 1);
+    }
+    for (int i = fst[x]; i; i = e[i].n)
+    {
+        int y = e[i].y;
+        if (p[y].v)
+            continue;
+        getroot(y, x);
+        wk(root);
+    }
+}
+void ins(int x, int y)
+{
+    e[++num] = {x, y, fst[x]};
+    fst[x] = num;
+}
+int main()
+{
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt; n; i++)
+    {
+        int x, y;
+        scanf(&quot;%d%d&quot;, &amp;x, &amp;y);
+        ins(x, y);
+        ins(y, x);
+        p[x].deg++;
+        p[y].deg++;
+    }
+    getL1(1, 0); /*
+    for (int i = 1; i &lt;= n; i++)
+        printf(&quot;%d &quot;, p[i].L);
+    puts(&quot;&quot;);*/
+    getL2(1, 0); /*
+    for (int i = 1; i &lt;= n; i++)
+        printf(&quot;%d &quot;, p[i].L);
+    puts(&quot;&quot;);*/
+    for (int i = 1; i &lt;= n; i++)
+        if (p[i].deg == 1)
+            p[i].ans = 1;
+    getroot(1, 0);
+    int hh = root;
+    wk(root);
+    for (int i = 1; i &lt;= n; i++)
+        printf(&quot;%d\n&quot;, p[i].ans);
+}
+</code></pre>
+
+  </article>
+
+  
+    
+  <div class="nexmoe-post-copyright">
+    <strong>本文作者：</strong>tkj<br>
+    <strong>本文链接：</strong><a href="https://tkj666.github.io/88/" title="https://tkj666.github.io/88/" target="_blank" rel="noopener">https://tkj666.github.io/88/</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+        <a class="nexmoefont icon-tag-fill -link" href="/tags/DP/">DP</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/树形DP/">树形DP</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/点分治/">点分治</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'bacf615502a9dd39b33a',
+        clientSecret: 'ccd4771fed399fa683cb90deef08fe228b2640fc',
+        id: window.location.pathname,
+        repo: 'tkj666.github.io',
+        owner: 'tkj666',
+        admin: 'tkj666'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+  </div>
+</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script>
+	hljs.initHighlightingOnLoad();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
+ <script src="/js/app.js?v=1607492510597"></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

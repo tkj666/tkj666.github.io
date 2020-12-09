@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  
+  <title>Codeforces 436D. Pudding Monsters - tkj&#39;s Blog</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="null">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
+  <meta name="description" content="题意：有一条无限长的带子，上面画有格子，其中一些是特殊格。有一些格子上有布丁怪兽。如果若干个怪兽的位置相邻，那么它们就会连起来。你需要进行若干次操作。每一次操作中，你需要选定一个怪兽，然后把它和连着它的怪兽一起向左或向右移动，知道移动到无穷远或碰到其他的怪兽并连起来。最多可以覆盖多少特殊格呢？">
+<meta name="keywords" content="DP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces 436D. Pudding Monsters">
+<meta property="og:url" content="https://tkj666.github.io/100/index.html">
+<meta property="og:site_name" content="tkj&#39;s Blog">
+<meta property="og:description" content="题意：有一条无限长的带子，上面画有格子，其中一些是特殊格。有一些格子上有布丁怪兽。如果若干个怪兽的位置相邻，那么它们就会连起来。你需要进行若干次操作。每一次操作中，你需要选定一个怪兽，然后把它和连着它的怪兽一起向左或向右移动，知道移动到无穷远或碰到其他的怪兽并连起来。最多可以覆盖多少特殊格呢？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-09T03:04:25.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Codeforces 436D. Pudding Monsters">
+<meta name="twitter:description" content="题意：有一条无限长的带子，上面画有格子，其中一些是特殊格。有一些格子上有布丁怪兽。如果若干个怪兽的位置相邻，那么它们就会连起来。你需要进行若干次操作。每一次操作中，你需要选定一个怪兽，然后把它和连着它的怪兽一起向左或向右移动，知道移动到无穷远或碰到其他的怪兽并连起来。最多可以覆盖多少特殊格呢？">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
+  
+  <link rel="stylesheet" href="/css/style.css?v=1607492510417">
+</head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(/img/background.jpg)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="tkj" class="mdui-btn mdui-btn-icon"><img src="/img/avatar.png" alt="tkj"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="tkj">
+            <img src="/img/avatar.png" alt="tkj" alt="tkj">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>142</div>
+        <div><span>标签</span>99</div>
+        <div><span>分类</span>0</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        <form id="search_form" action_e="https://cn.bing.com/search?q=site:tkj666.github.io" onsubmit="return search();">
+            <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+        </form>
+    </div>
+</div>
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://github.com/tkj666/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">            <i class="nexmoefont icon-github"></i>
+        </a>
+    </div>
+</div>
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AC自动机/" style="font-size: 11.82px;">AC自动机</a> <a href="/tags/C-语言/" style="font-size: 10px;">C++语言</a> <a href="/tags/DP/" style="font-size: 20px;">DP</a> <a href="/tags/LCA/" style="font-size: 11.82px;">LCA</a> <a href="/tags/Prufer序列/" style="font-size: 10.91px;">Prüfer序列</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/bitset/" style="font-size: 10px;">bitset</a> <a href="/tags/cf/" style="font-size: 10px;">cf</a> <a href="/tags/dfs/" style="font-size: 11.82px;">dfs</a> <a href="/tags/dfs序/" style="font-size: 12.73px;">dfs序</a> <a href="/tags/dp/" style="font-size: 10.91px;">dp</a> <a href="/tags/exgcd/" style="font-size: 10px;">exgcd</a> <a href="/tags/fft/" style="font-size: 10.91px;">fft</a> <a href="/tags/gcd/" style="font-size: 11.82px;">gcd</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/lca/" style="font-size: 10px;">lca</a> <a href="/tags/material/" style="font-size: 10px;">material</a> <a href="/tags/mathjax/" style="font-size: 10px;">mathjax</a> <a href="/tags/pbds/" style="font-size: 10px;">pbds</a> <a href="/tags/set/" style="font-size: 11.82px;">set</a> <a href="/tags/splay/" style="font-size: 13.64px;">splay</a> <a href="/tags/stl/" style="font-size: 10.91px;">stl</a> <a href="/tags/tarjan/" style="font-size: 10px;">tarjan</a> <a href="/tags/trie/" style="font-size: 12.73px;">trie</a> <a href="/tags/三分/" style="font-size: 10px;">三分</a> <a href="/tags/主席树/" style="font-size: 12.73px;">主席树</a> <a href="/tags/乱搞/" style="font-size: 11.82px;">乱搞</a> <a href="/tags/二分/" style="font-size: 18.18px;">二分</a> <a href="/tags/二分图/" style="font-size: 10px;">二分图</a> <a href="/tags/二分图匹配/" style="font-size: 10px;">二分图匹配</a> <a href="/tags/交互题/" style="font-size: 10px;">交互题</a> <a href="/tags/储存原理/" style="font-size: 10px;">储存原理</a> <a href="/tags/凸包/" style="font-size: 10.91px;">凸包</a> <a href="/tags/分块/" style="font-size: 11.82px;">分块</a> <a href="/tags/分数规划/" style="font-size: 10px;">分数规划</a> <a href="/tags/分治/" style="font-size: 11.82px;">分治</a> <a href="/tags/切比雪夫距离/" style="font-size: 10px;">切比雪夫距离</a> <a href="/tags/半平面交/" style="font-size: 10px;">半平面交</a> <a href="/tags/单位根反演/" style="font-size: 10.91px;">单位根反演</a> <a href="/tags/单调队列/" style="font-size: 10px;">单调队列</a> <a href="/tags/博弈/" style="font-size: 11.82px;">博弈</a> <a href="/tags/可并堆/" style="font-size: 10px;">可并堆</a> <a href="/tags/可持久化trie/" style="font-size: 10px;">可持久化trie</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/后缀自动机/" style="font-size: 10.91px;">后缀自动机</a> <a href="/tags/哈希/" style="font-size: 12.73px;">哈希</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/容斥/" style="font-size: 10.91px;">容斥</a> <a href="/tags/对偶图/" style="font-size: 10px;">对偶图</a> <a href="/tags/差分约束/" style="font-size: 10px;">差分约束</a> <a href="/tags/平衡树/" style="font-size: 10px;">平衡树</a> <a href="/tags/并查集/" style="font-size: 10.91px;">并查集</a> <a href="/tags/快速幂/" style="font-size: 12.73px;">快速幂</a> <a href="/tags/打表/" style="font-size: 10.91px;">打表</a> <a href="/tags/扫描线/" style="font-size: 10.91px;">扫描线</a> <a href="/tags/拓扑序/" style="font-size: 10.91px;">拓扑序</a> <a href="/tags/排序/" style="font-size: 10.91px;">排序</a> <a href="/tags/插头DP/" style="font-size: 10px;">插头DP</a> <a href="/tags/搜索/" style="font-size: 10px;">搜索</a> <a href="/tags/数位DP/" style="font-size: 12.73px;">数位DP</a> <a href="/tags/数学/" style="font-size: 14.55px;">数学</a> <a href="/tags/数论/" style="font-size: 15.45px;">数论</a> <a href="/tags/斯坦纳树/" style="font-size: 10.91px;">斯坦纳树</a> <a href="/tags/暴力/" style="font-size: 10px;">暴力</a> <a href="/tags/曼哈顿距离/" style="font-size: 10px;">曼哈顿距离</a> <a href="/tags/最小割/" style="font-size: 10px;">最小割</a> <a href="/tags/最短路/" style="font-size: 12.73px;">最短路</a> <a href="/tags/最长上升子序列/" style="font-size: 10px;">最长上升子序列</a> <a href="/tags/最长公共子序列/" style="font-size: 10px;">最长公共子序列</a> <a href="/tags/期望/" style="font-size: 10.91px;">期望</a> <a href="/tags/权值线段树/" style="font-size: 10px;">权值线段树</a> <a href="/tags/构造/" style="font-size: 10px;">构造</a> <a href="/tags/树套树/" style="font-size: 10px;">树套树</a> <a href="/tags/树形DP/" style="font-size: 14.55px;">树形DP</a> <a href="/tags/树形dp/" style="font-size: 10px;">树形dp</a> <a href="/tags/树状数组/" style="font-size: 14.55px;">树状数组</a> <a href="/tags/树的直径/" style="font-size: 10.91px;">树的直径</a> <a href="/tags/模拟/" style="font-size: 10px;">模拟</a> <a href="/tags/游记/" style="font-size: 10.91px;">游记</a> <a href="/tags/点分治/" style="font-size: 10px;">点分治</a> <a href="/tags/状压DP/" style="font-size: 14.55px;">状压DP</a> <a href="/tags/矩阵乘法/" style="font-size: 16.36px;">矩阵乘法</a> <a href="/tags/离散化/" style="font-size: 12.73px;">离散化</a> <a href="/tags/线性基/" style="font-size: 10px;">线性基</a> <a href="/tags/线段树/" style="font-size: 19.09px;">线段树</a> <a href="/tags/线段树分治/" style="font-size: 10px;">线段树分治</a> <a href="/tags/组合数学/" style="font-size: 14.55px;">组合数学</a> <a href="/tags/网络流/" style="font-size: 11.82px;">网络流</a> <a href="/tags/莫队/" style="font-size: 10.91px;">莫队</a> <a href="/tags/虚树/" style="font-size: 10px;">虚树</a> <a href="/tags/裴蜀定理/" style="font-size: 11.82px;">裴蜀定理</a> <a href="/tags/计算几何/" style="font-size: 17.27px;">计算几何</a> <a href="/tags/贪心/" style="font-size: 12.73px;">贪心</a> <a href="/tags/费用流/" style="font-size: 10.91px;">费用流</a> <a href="/tags/辛普森积分法/" style="font-size: 10px;">辛普森积分法</a> <a href="/tags/边分治/" style="font-size: 10px;">边分治</a> <a href="/tags/错排公式/" style="font-size: 10px;">错排公式</a> <a href="/tags/闵可夫斯基和/" style="font-size: 10px;">闵可夫斯基和</a> <a href="/tags/高精度/" style="font-size: 10.91px;">高精度</a>
+    </div>
+    
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">54</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">72</span></li></ul>
+    </div>
+  </div>
+
+
+<style>
+.nexmoe-widget .archive-list-count{
+	position : absolute;
+	right: 15px;
+	top:9px;
+	color: #DDD;
+}
+</style>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2020 tkj
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+  
+      <div class="nexmoe-post-cover" style="padding-bottom: 6.666666666666667%;"> 
+          <img data-src="/img/background.jpg" data-sizes="auto" alt="Codeforces 436D. Pudding Monsters" class="lazyload">
+          <h1>Codeforces 436D. Pudding Monsters</h1>
+      </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2018年10月09日</a>
+    <a><i class="nexmoefont icon-areachart"></i>713 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
+</div>
+
+  <div class="nexmoe-post-right">
+    
+      <div class="nexmoe-fixed">
+        <div class="nexmoe-valign">
+            <div class="nexmoe-toc">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题意："><span class="toc-number">1.</span> <span class="toc-text">题意：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题解："><span class="toc-number">2.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码："><span class="toc-number">3.</span> <span class="toc-text">代码：</span></a></li></ol>
+            </div>
+        </div>
+      </div>
+    
+  </div>
+
+  <article>
+    <h2 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h2><p>有一条无限长的带子，上面画有格子，其中一些是特殊格。有一些格子上有布丁怪兽。如果若干个怪兽的位置相邻，那么它们就会连起来。你需要进行若干次操作。每一次操作中，你需要选定一个怪兽，然后把它和连着它的怪兽一起向左或向右移动，知道移动到无穷远或碰到其他的怪兽并连起来。最多可以覆盖多少特殊格呢？<br><a id="more"></a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><p>首先，最优方案一定不会让某些怪移到无穷远，也不会先连起来再一起移动（这样可以分别移到最后的位置）。设$f_i$表示前$i$只怪兽，第$i$只不动的答案；$g_i$表示前$i$只怪兽的答案；$s(i, j)$表示$i$到$j$之间有多少特殊格；$a_i$表示第$i$个怪兽的位置。转移的话，$f_i$就是枚举左边有多少个怪兽靠过来，然后通过$g$转移。但这样是$O(n ^ 2)$的。注意到如果靠过来的这一大段的左边是非特殊格，那么它靠过来就是没有意义的。所以只需要枚举特殊格就好了。这样可以变成$O(nm)$的。$g_i$的转移类似。方程：$f_i = \max\{g_j + s(a_i - (i - j - 1), a_i)\}, g_j = \max\{f_i + s(a_i, a_i + (j - i))\} \cup \{g_{i - 1}\}$<br>还有一点就是一开始就连起来的情况。随便搞搞就好。</p>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><pre><code class="lang-cpp">#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int n, m, a[100010], p[2010], f[100010], g[100010], l[100010], r[100010], cnt[200010];
+
+int main()
+{
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 1; i &lt;= m; i++) scanf(&quot;%d&quot;, &amp;p[i]);
+    sort(a + 1, a + 1 + n);
+    sort(p + 1, p + 1 + m);
+    for (int i = 1; i &lt;= m; i++) cnt[p[i]] = 1;
+    for (int i = 1; i &lt;= 200000; i++) cnt[i] += cnt[i - 1];
+    l[1] = 1;
+    for (int i = 2; i &lt;= n; i++)
+        l[i] = a[i] == a[i - 1] + 1 ? l[i - 1] : i;
+    r[n] = n;
+    for (int i = n - 1; i &gt; 0; i--)
+        r[i] = a[i] == a[i + 1] - 1 ? r[i + 1] : i;/*
+    for (int i = 1; i &lt;= 10; i++)
+        printf(&quot;%d &quot;, cnt[i]);
+    puts(&quot;&quot;);*/
+    for (int i = 1; i &lt;= n; i++)
+    {
+        if (cnt[a[i]] - cnt[a[i] - 1] == 1) f[i] = 1;
+        f[i] += g[l[i] - 1];
+        for (int j = 1; j &lt;= m &amp;&amp; p[j] &lt; a[i]; j++)
+        {
+            int hh = i - (a[i] - p[j]);
+            // printf(&quot;%d %d\n&quot;, j, hh);
+            if (hh &lt;= 0) continue;
+            f[i] = max(f[i], g[l[hh] - 1] + cnt[a[i]] - cnt[p[j] - 1]);
+        }
+        g[i] = max({g[i], f[i], g[i - 1]});
+        for (int j = m; j &gt; 0 &amp;&amp; p[j] &gt; a[i]; j--)
+        {
+            int hh = i + (p[j] - a[i]);
+            if (hh &gt; n) continue;
+            g[r[hh]] = max(g[r[hh]], f[i] + cnt[p[j]] - cnt[a[i]]);
+        }
+        /*
+        printf(&quot;%d\n&quot;, f[i]);
+        for (int j = 1; j &lt;= n; j++)
+            printf(&quot;%d &quot;, g[j]);
+        puts(&quot;&quot;);*/
+    }
+    printf(&quot;%d\n&quot;, g[n]);
+}
+</code></pre>
+
+  </article>
+
+  
+    
+  <div class="nexmoe-post-copyright">
+    <strong>本文作者：</strong>tkj<br>
+    <strong>本文链接：</strong><a href="https://tkj666.github.io/100/" title="https://tkj666.github.io/100/" target="_blank" rel="noopener">https://tkj666.github.io/100/</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+        <a class="nexmoefont icon-tag-fill -link" href="/tags/DP/">DP</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'bacf615502a9dd39b33a',
+        clientSecret: 'ccd4771fed399fa683cb90deef08fe228b2640fc',
+        id: window.location.pathname,
+        repo: 'tkj666.github.io',
+        owner: 'tkj666',
+        admin: 'tkj666'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+  </div>
+</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script>
+	hljs.initHighlightingOnLoad();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
+ <script src="/js/app.js?v=1607492510434"></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>
